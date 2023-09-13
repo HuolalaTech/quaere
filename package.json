@@ -1,6 +1,6 @@
 {
   "name": "quaere",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A React Query wrapper for Suspense",
   "author": "liaoliao666",
   "repository": "https://github.com/HuolalaTech/quaere",
