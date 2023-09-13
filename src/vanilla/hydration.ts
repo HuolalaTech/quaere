@@ -3,7 +3,7 @@ import { ObservableQueryOptions } from './observableQuery'
 import type { QueryClient } from './queryClient'
 import type { QueryInfo, QueryInfoState } from './queryInfo'
 import { QueryMeta } from './typeUtils'
-import { isGeneratedKey, isPlainObject } from './utils'
+import { isGeneratedKey, isPlainObject, isUndefined } from './utils'
 
 // TYPES
 
@@ -42,11 +42,11 @@ const dehydrateQuery = (queryInfo: QueryInfo): DehydratedQuery => {
       key: queryInfo.query.key,
       ...(queryInfo.query.$inf$ && { $inf$: true }),
     } as BaseQuery,
-    variables: queryInfo.variables,
     queryHash: queryInfo.queryHash,
     state: queryInfo.state,
-    ...(queryInfo.meta && { meta: queryInfo.meta }),
-  }
+    ...(!isUndefined(queryInfo.variables) && { variables: queryInfo.variables }),
+    ...(!isUndefined(queryInfo.meta) && { meta: queryInfo.meta }),
+  } as DehydratedQuery
 }
 
 export const defaultShouldDehydrateQuery = (queryInfo: QueryInfo) => {

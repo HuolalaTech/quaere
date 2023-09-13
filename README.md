@@ -3,7 +3,7 @@
 
 <p align="center">
   <a aria-label="NPM version" href="https://quaere-site.vercel.app">
-    <img alt="" src="https://raw.githubusercontent.com/liaoliao666/quaere-site/main/assets/logo.svg">
+    <img alt="" src="https://raw.githubusercontent.com/liaoliao666/quaere-site/main/assets/logo.svg" height="40">
   </a>
 </p>
 
@@ -14,7 +14,7 @@
     <img alt="" src="https://badgen.net/npm/v/quaere">
   </a>
    <a href="https://unpkg.com/browse/quaere@latest/build/umd/index.production.js" rel="nofollow"><img src="https://img.badgesize.io/https:/unpkg.com/quaere@latest/build/umd/index.production.js?label=gzip%20size&compression=gzip" alt="gzip size"></a>
-  <a aria-label="License" href="https://github.com/vercel/quaere/blob/main/LICENSE">
+  <a aria-label="License" href="https://github.com/HuolalaTech/quaere/blob/main/LICENSE">
     <img alt="" src="https://badgen.net/npm/license/quaere">
   </a>
   <a href="https://www.npmjs.com/package/quaere"><img src="https://badgen.net/npm/license/quaere" alt="License" target="\_parent"></a>

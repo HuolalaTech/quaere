@@ -224,3 +224,6 @@ export const shallowEqualObjects = <T>(a: T, b: T): boolean => {
 
   return true
 }
+
+
+export const getAbortController = () => isServer ? UNDEFINED : new AbortController()

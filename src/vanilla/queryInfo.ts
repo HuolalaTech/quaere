@@ -24,6 +24,7 @@ import {
 import {
   findSet,
   functionalUpdate,
+  getAbortController,
   isFunction,
   isServer,
   isUndefined,
@@ -300,7 +301,7 @@ export function createQueryInfo<
       setOptions(newOptions)
     }
 
-    const abortController = new AbortController()
+    const abortController =  getAbortController()
 
     // Create query function context
     const queryFunctionContext: Omit<QueryFunctionContext, 'signal'> = {
@@ -411,7 +412,7 @@ export function createQueryInfo<
     // Try to fetch the data
     retryer = createRetryer({
       fn: context.fetchFn as () => Promise<TQueryData>,
-      abort: abortController.abort.bind(abortController),
+      abort: abortController?.abort.bind(abortController),
       onSuccess: data => {
         if (isUndefined(data)) {
           if (process.env.NODE_ENV !== 'production') {
