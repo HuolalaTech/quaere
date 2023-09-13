@@ -3,7 +3,7 @@ import { ObservableQueryOptions } from './observableQuery'
 import type { QueryClient } from './queryClient'
 import type { QueryInfo, QueryInfoState } from './queryInfo'
 import { QueryMeta } from './typeUtils'
-import { isGeneratedKey, isPlainObject, isUndefined } from './utils'
+import { isGeneratedKey, isPlainObject } from './utils'
 
 // TYPES
 
@@ -22,7 +22,7 @@ export interface HydrateOptions {
 
 interface DehydratedQuery {
   query: BaseQuery
-  variables: any
+  variables?: any
   queryHash: string
   state: QueryInfoState<any, any>
   meta?: QueryMeta
@@ -36,17 +36,23 @@ export type DehydratedState = {
 // consuming the de/rehydrated data, typically with useQuery on the client.
 // Sometimes it might make sense to prefetch data on the server and include
 // in the html-payload, but not consume it on the initial render.
-const dehydrateQuery = (queryInfo: QueryInfo): DehydratedQuery => {
+const dehydrateQuery = ({
+  query,
+  queryHash,
+  state,
+  variables,
+  meta,
+}: QueryInfo): DehydratedQuery => {
   return {
     query: {
-      key: queryInfo.query.key,
-      ...(queryInfo.query.$inf$ && { $inf$: true }),
+      key: query.key,
+      ...(query.$inf$ && { $inf$: true }),
     } as BaseQuery,
-    queryHash: queryInfo.queryHash,
-    state: queryInfo.state,
-    ...(!isUndefined(queryInfo.variables) && { variables: queryInfo.variables }),
-    ...(!isUndefined(queryInfo.meta) && { meta: queryInfo.meta }),
-  } as DehydratedQuery
+    queryHash,
+    state,
+    ...(typeof variables !== 'undefined' && { variables }),
+    ...(meta && { meta }),
+  }
 }
 
 export const defaultShouldDehydrateQuery = (queryInfo: QueryInfo) => {

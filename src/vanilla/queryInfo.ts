@@ -24,7 +24,6 @@ import {
 import {
   findSet,
   functionalUpdate,
-  getAbortController,
   isFunction,
   isServer,
   isUndefined,
@@ -301,7 +300,7 @@ export function createQueryInfo<
       setOptions(newOptions)
     }
 
-    const abortController =  getAbortController()
+    const abortController = new AbortController()
 
     // Create query function context
     const queryFunctionContext: Omit<QueryFunctionContext, 'signal'> = {

@@ -1,3 +1,5 @@
+import 'client-only'
+
 export * from './useQuery'
 export * from './useSuspenseQuery'
 export * from './useSuspenseQueries'

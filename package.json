@@ -1,6 +1,6 @@
 {
   "name": "quaere",
-  "version": "0.0.3",
+  "version": "0.0.4-beta.5",
   "description": "A React Query wrapper for Suspense",
   "author": "liaoliao666",
   "repository": "https://github.com/HuolalaTech/quaere",
@@ -64,7 +64,9 @@
     "eslint": "eslint --fix '*.{js,json}' '{src,tests,benchmarks}/**/*.{ts,tsx}'",
     "test": "vitest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "client-only": "^0.0.1"
+  },
   "files": [
     "build/*",
     "src"
