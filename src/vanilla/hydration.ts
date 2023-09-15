@@ -1,5 +1,5 @@
-import { BaseQuery } from './baseQuery'
 import { ObservableQueryOptions } from './observableQuery'
+import { PrimitiveQuery } from './primitiveQuery'
 import type { QueryClient } from './queryClient'
 import type { QueryInfo, QueryInfoState } from './queryInfo'
 import { QueryMeta } from './typeUtils'
@@ -21,7 +21,7 @@ export interface HydrateOptions {
 }
 
 interface DehydratedQuery {
-  query: BaseQuery
+  query: PrimitiveQuery
   variables?: any
   queryHash: string
   state: QueryInfoState<any, any>
@@ -47,7 +47,7 @@ const dehydrateQuery = ({
     query: {
       key: query.key,
       ...(query.$inf$ && { $inf$: true }),
-    } as BaseQuery,
+    } as PrimitiveQuery,
     queryHash,
     state,
     ...(typeof variables !== 'undefined' && { variables }),

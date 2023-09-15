@@ -1,7 +1,7 @@
-import { BaseQuery, isInfiniteQuery } from './baseQuery'
 import { createGcManager } from './gcManager'
 import { createInfiniteQueryBehavior } from './infiniteQueryBehavior'
 import { ObservableQuery } from './observableQuery'
+import { PrimitiveQuery, isInfiniteQuery } from './primitiveQuery'
 import { QueryCache } from './queryCache'
 import {
   CancelOptions,
@@ -56,7 +56,7 @@ export interface QueryInfoOptions<
   TError = Error,
   TQueryData = TFetcherData
 > {
-  query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+  query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
   variables?: TVars
   /**
    * If `false`, failed queries will not retry by default.
@@ -103,7 +103,7 @@ export interface QueryInfoConfig<
   cache: QueryCache
   state?: QueryInfoState<TQueryData, TError>
   queryHash: string
-  query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+  query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
   variables: TVars
 }
 
@@ -113,7 +113,7 @@ export interface FetchContext<
   TError = Error,
   TQueryData = TFetcherData
 > {
-  query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+  query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
   variables: TVars
   fetchOptions?: FetchOptions
   options: QueryInfoOptions<TFetcherData, TVars, TError, TQueryData>

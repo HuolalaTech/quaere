@@ -2,7 +2,7 @@ import { ObservableQueryOptions } from './observableQuery'
 import { QueryFunctionContext } from './typeUtils'
 import { generatekey } from './utils'
 
-export interface BaseQueryOptions<
+export interface PrimitiveQueryOptions<
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error,
@@ -22,23 +22,23 @@ export interface BaseQueryOptions<
   $inf$?: true
 }
 
-export interface BaseQuery<
+export interface PrimitiveQuery<
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error,
   TQueryData = TFetcherData
-> extends BaseQueryOptions<TFetcherData, TVars, TError, TQueryData> {
+> extends PrimitiveQueryOptions<TFetcherData, TVars, TError, TQueryData> {
   key: string
 }
 
-export const baseQuery = <
+export const primitiveQuery = <
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error,
   TQueryData = TFetcherData
 >(
-  options: BaseQueryOptions<TFetcherData, TVars, TError, TQueryData>
-): BaseQuery<TFetcherData, TVars, TError, TQueryData> => {
+  options: PrimitiveQueryOptions<TFetcherData, TVars, TError, TQueryData>
+): PrimitiveQuery<TFetcherData, TVars, TError, TQueryData> => {
   return {
     ...options,
     key: options.key ?? generatekey(),
@@ -46,7 +46,7 @@ export const baseQuery = <
 }
 
 export const isInfiniteQuery = (
-  query: BaseQuery<any, any, any, any>
+  query: PrimitiveQuery<any, any, any, any>
 ): boolean => {
   return !!query.$inf$
 }

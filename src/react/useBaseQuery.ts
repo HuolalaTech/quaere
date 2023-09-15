@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import { QueryClient } from '../vanilla'
-import { BaseQuery } from '../vanilla/baseQuery'
 import {
   ObservableQueryOptions,
   ObservableQueryResult,
 } from '../vanilla/observableQuery'
+import { PrimitiveQuery } from '../vanilla/primitiveQuery'
 import { useQueryClient } from './QueryClientProvider'
 import { useQueryErrorResetBoundary } from './QueryErrorResetBoundary'
 import {
@@ -22,7 +22,7 @@ export type UseBseQueryOptions<
   TQueryData = TFetcherData,
   TData = TFetcherData
 > = ObservableQueryOptions<TFetcherData, TVars, TError, TQueryData, TData> & {
-  query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+  query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
 }
 
 export type UseBaseQueryResult<

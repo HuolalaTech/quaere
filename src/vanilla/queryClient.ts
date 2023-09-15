@@ -1,4 +1,3 @@
-import { BaseQuery, isInfiniteQuery } from './baseQuery'
 import { focusManager } from './focusManager'
 import {
   MutationCache,
@@ -17,6 +16,7 @@ import {
   createObservableQuery,
 } from './observableQuery'
 import { onlineManager } from './onlineManager'
+import { PrimitiveQuery, isInfiniteQuery } from './primitiveQuery'
 import {
   QueryCache,
   QueryInfoFilters,
@@ -217,12 +217,12 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TQueryData = TFetcherData
   >(
     filters: {
-      query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+      query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
     } & GetVariables<TVars>
   ): QueryInfoState<TQueryData, TError> | undefined => {
     return queryCache.find(
       filters as {
-        query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+        query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
         variables: DeepPartial<TVars>
       }
     )?.state
@@ -235,7 +235,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TQueryData = TFetcherData
   >(
     filters: {
-      query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+      query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
     } & GetVariables<TVars>
   ): TQueryData | undefined => {
     return getQueryState(filters)?.data
@@ -248,7 +248,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TQueryData = TFetcherData
   >(
     filters: {
-      query: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+      query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
     } & GetVariables<TVars>,
     updater: Updater<TQueryData | undefined, TQueryData | undefined>,
     setDataOptions?: SetDataOptions

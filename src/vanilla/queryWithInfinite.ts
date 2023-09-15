@@ -1,5 +1,9 @@
-import { BaseQuery, BaseQueryOptions, baseQuery } from './baseQuery'
 import { InfiniteQueryPageParamsOptions } from './infiniteQueryBehavior'
+import {
+  PrimitiveQuery,
+  PrimitiveQueryOptions,
+  primitiveQuery,
+} from './primitiveQuery'
 import { QueryFunction } from './typeUtils'
 import { InfiniteData } from './types'
 
@@ -8,7 +12,12 @@ export interface QueryWithInfiniteOptions<
   TVars = unknown,
   TError = Error
 > extends Omit<
-      BaseQueryOptions<TFetcherData, TVars, TError, InfiniteData<TFetcherData>>,
+      PrimitiveQueryOptions<
+        TFetcherData,
+        TVars,
+        TError,
+        InfiniteData<TFetcherData>
+      >,
       '_default'
     >,
     InfiniteQueryPageParamsOptions<TFetcherData> {
@@ -19,7 +28,12 @@ export interface InfiniteQuery<
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error
-> extends BaseQuery<TFetcherData, TVars, TError, InfiniteData<TFetcherData>> {
+> extends PrimitiveQuery<
+    TFetcherData,
+    TVars,
+    TError,
+    InfiniteData<TFetcherData>
+  > {
   $inf$: true
 }
 
@@ -30,7 +44,7 @@ export const queryWithInfinite = <
 >(
   options: QueryWithInfiniteOptions<TFetcherData, TVars, TError>
 ): InfiniteQuery<TFetcherData, TVars, TError> => {
-  return baseQuery({
+  return primitiveQuery({
     ...options,
     $inf$: true,
   }) as InfiniteQuery<TFetcherData, TVars, TError>

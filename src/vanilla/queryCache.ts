@@ -1,4 +1,4 @@
-import { BaseQuery } from './baseQuery'
+import { PrimitiveQuery } from './primitiveQuery'
 import { QueryClient } from './queryClient'
 import {
   Action,
@@ -264,7 +264,7 @@ export interface QueryInfoFilters<
   predicate?: (
     queryInfo: QueryInfo<TFetcherData, TVars, TError, TQueryData>
   ) => boolean
-  query?: BaseQuery<TFetcherData, TVars, TError, TQueryData>
+  query?: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
   variables?: DeepPartial<TVars>
   fetchStatus?: FetchStatus
   stale?: boolean
