@@ -62,8 +62,6 @@ export interface InvalidateQueryFilters<
   refetchType?: QueryInfoTypeFilter | 'none'
 }
 
-export type GetPages<TFetcherData, TQueryData> =
-  TQueryData extends InfiniteData<TFetcherData> ? { pages?: number } : object
 
 export type FetchQueryOptions<
   TFetcherData = unknown,
@@ -271,7 +269,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TError = Error,
     TQueryData = TFetcherData
   >(
-    filters: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>
+    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>
   ): [
     QueryInfo<TFetcherData, TVars, TError, TQueryData>,
     TQueryData | undefined
@@ -305,7 +303,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TError = Error,
     TQueryData = TFetcherData
   >(
-    filters: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>
+    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>
   ) => {
     queryCache
       .findAll(filters)
@@ -376,7 +374,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TError = Error,
     TQueryData = TFetcherData
   >(
-    filters: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData> = {},
+    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData> ,
     cancelOptions: CancelOptions = {}
   ): Promise<void> => {
     const defaultedCancelOptions = { revert: true, ...cancelOptions }

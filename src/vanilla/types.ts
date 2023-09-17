@@ -19,3 +19,10 @@ export type inferData<T> = T extends PrimitiveQuery<infer TData, any, any, any>
   ? TData
   : never
 
+  export type inferError<T> = T extends PrimitiveQuery<any, any, infer TError, any>
+  ? TError
+  : T extends Mutation<any, any,  infer TError>
+  ? TError
+  : never
+
+
