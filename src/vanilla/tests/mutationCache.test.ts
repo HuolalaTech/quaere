@@ -13,7 +13,7 @@ describe('mutationCache', () => {
       const testCache = createMutationCache({ onError, onSuccess, onSettled })
       const testClient = createQueryClient({ mutationCache: testCache })
       const anMutation = mutation({
-        fetcher: () => Promise.reject(new Error('error')),
+       fetcher: (_: string) => Promise.reject(new Error('error')),
       })
 
       try {
@@ -45,7 +45,7 @@ describe('mutationCache', () => {
 
     it('should be awaited', async () => {
       const anMutation = mutation({
-        fetcher: () => Promise.reject(new Error('error')),
+       fetcher: (_: string) => Promise.reject(new Error('error')),
         onError: async () => {
           states.push(3)
           await sleep(1)
@@ -87,7 +87,7 @@ describe('mutationCache', () => {
   describe('MutationCacheConfig success callbacks', () => {
     it('should call onSuccess and onSettled when a mutation is successful', async () => {
       const anMutation = mutation({
-        fetcher: () => Promise.resolve({ data: 5 }),
+       fetcher: (_: string) => Promise.resolve({ data: 5 }),
       })
       const onError = vi.fn()
       const onSuccess = vi.fn()
@@ -119,7 +119,7 @@ describe('mutationCache', () => {
     })
     it('should be awaited', async () => {
       const anMutation = mutation({
-        fetcher: () => Promise.resolve({ data: 5 }),
+        fetcher: (_: string) => Promise.resolve({ data: 5 }),
         onSuccess: async () => {
           states.push(3)
           await sleep(1)
@@ -160,7 +160,7 @@ describe('mutationCache', () => {
   describe('find', () => {
     it('should filter correctly', async () => {
       const anMutation = mutation({
-        fetcher: () => Promise.resolve(),
+       fetcher: (_: string) => Promise.resolve(),
       })
       const testCache = createMutationCache()
       const testClient = createQueryClient({ mutationCache: testCache })
@@ -192,13 +192,13 @@ describe('mutationCache', () => {
       const testCache = createMutationCache()
       const testClient = createQueryClient({ mutationCache: testCache })
       const mutation1 = mutation({
-        fetcher: () => Promise.resolve(),
+       fetcher: (_: number) => Promise.resolve(),
       })
       const mutation2 = mutation({
-        fetcher: () => Promise.resolve(),
+       fetcher: (_: number) => Promise.resolve(),
       })
       const mutation3 = mutation({
-        fetcher: () => Promise.resolve(),
+       fetcher: (_: number) => Promise.resolve(),
       })
 
       await executeMutation(
@@ -244,7 +244,7 @@ describe('mutationCache', () => {
       const testClient = createQueryClient({ mutationCache: testCache })
       const onSuccess = vi.fn()
       const anMutation = mutation({
-        fetcher: () => Promise.resolve(),
+       fetcher: (_: number) => Promise.resolve(),
         onSuccess,
         gcTime: 10,
       })

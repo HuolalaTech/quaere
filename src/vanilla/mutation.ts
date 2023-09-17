@@ -3,7 +3,7 @@ import { generatekey } from './utils'
 
 export interface MutationOptions<
   TData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends Omit<MutationInfoOptions<TData, TVars, TError>, 'mutation'> {
   fetcher: (
@@ -12,12 +12,12 @@ export interface MutationOptions<
   ) => Promise<TData>
 }
 
-export interface Mutation<TData = unknown, TVars = unknown, TError = Error>
+export interface Mutation<TData = unknown, TVars = void, TError = Error>
   extends MutationOptions<TData, TVars, TError> {
   key: string
 }
 
-export const mutation = <TData = unknown, TVars = unknown, TError = Error>(
+export const mutation = <TData = unknown, TVars = void, TError = Error>(
   options: MutationOptions<TData, TVars, TError>
 ): Mutation<TData, TVars, TError> => {
   return {

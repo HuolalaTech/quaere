@@ -11,7 +11,7 @@ import { shouldThrowError } from './utils'
 
 export interface UseMutationOptions<
   TData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends Omit<MutationInfoOptions<TData, TVars, TError>, 'defaulted'> {
   throwOnError?: boolean | ((error: TError) => boolean)
@@ -19,21 +19,21 @@ export interface UseMutationOptions<
 
 export interface TriggerOptions<
   TData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends Pick<
     MutationInfoOptions<TData, TVars, TError>,
     'onError' | 'onSettled' | 'onSuccess'
   > {}
 
-export type TriggerFn<TData = unknown, TVars = unknown, TError = Error> = (
-  variables: TVars,
+export type TriggerFn<TData = unknown, TVars = void, TError = Error> = (
+  variables: TVars extends void ? void | TVars : TVars,
   mutateOptions?: TriggerOptions<TData, TVars, TError>
 ) => Promise<TData>
 
 export type UseMutationResult<
   TData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > = {
   data?: TData
@@ -44,7 +44,7 @@ export type UseMutationResult<
   reset: () => void
 }
 
-export const useMutation = <TData = unknown, TVars = unknown, TError = Error>(
+export const useMutation = <TData = unknown, TVars = void, TError = Error>(
   mutaionOptions: UseMutationOptions<TData, TVars, TError>
 ): UseMutationResult<TData, TVars, TError> => {
   const client = useQueryClient()
@@ -83,18 +83,18 @@ export const useMutation = <TData = unknown, TVars = unknown, TError = Error>(
 
       unsubscribe = currentMutationInfo.subscribe(rerender)
 
-      return currentMutationInfo.trigger(variables).then(
+      return currentMutationInfo.trigger(variables as TVars).then(
         data => {
-          mutateOptions?.onSuccess?.(data, variables, currentMutationInfo)
-          mutateOptions?.onSettled?.(data, null, variables, currentMutationInfo)
+          mutateOptions?.onSuccess?.(data, variables as TVars, currentMutationInfo)
+          mutateOptions?.onSettled?.(data, null, variables as TVars, currentMutationInfo)
           return data
         },
         error => {
-          mutateOptions?.onError?.(error, variables, currentMutationInfo)
+          mutateOptions?.onError?.(error, variables as TVars, currentMutationInfo)
           mutateOptions?.onSettled?.(
             UNDEFINED,
             error,
-            variables,
+            variables as TVars,
             currentMutationInfo
           )
           throw error
@@ -131,3 +131,5 @@ export const useMutation = <TData = unknown, TVars = unknown, TError = Error>(
     reset,
   }
 }
+
+
