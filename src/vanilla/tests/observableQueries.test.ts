@@ -65,12 +65,12 @@ describe('queriesObserver', () => {
     unsubscribe()
     expect(results.length).toBe(6)
     expect(results[0]).toMatchObject([
-      { isLoading: false, isFetching: false, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[1]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[2]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
@@ -119,12 +119,12 @@ describe('queriesObserver', () => {
     expect(queryCache.find({ query: query2, type: 'active' })).toBeUndefined()
     expect(results.length).toBe(6)
     expect(results[0]).toMatchObject([
-      { isLoading: false, isFetching: false, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[1]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[2]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
@@ -167,12 +167,12 @@ describe('queriesObserver', () => {
     unsubscribe()
     expect(results.length).toBe(6)
     expect(results[0]).toMatchObject([
-      { isLoading: false, isFetching: false, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[1]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[2]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
@@ -217,12 +217,12 @@ describe('queriesObserver', () => {
     expect(results.length).toBe(5)
 
     expect(results[0]).toMatchObject([
-      { isLoading: false, isFetching: false, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[1]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },
-      { isLoading: false, isFetching: false, data: undefined },
+      { isLoading: true, isFetching: false, data: undefined },
     ])
     expect(results[2]).toMatchObject([
       { isLoading: true, isFetching: true, data: undefined },

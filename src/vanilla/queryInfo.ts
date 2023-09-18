@@ -223,6 +223,7 @@ export function createQueryInfo<
       'query'
     >
   ) => {
+    if (newOptions.query) options.query = newOptions.query
     options = {
       ...options.query,
       ...newOptions,
@@ -337,7 +338,7 @@ export function createQueryInfo<
       }
 
       if (!options.query.fetcher) {
-        return Promise.reject(new Error(`Missing queryFn: '${queryHash}'`))
+        return Promise.reject(new Error(`Missing fetcher: '${queryHash}'`))
       }
 
       abortSignalConsumed = false
@@ -620,18 +621,14 @@ export function createQueryInfo<
     onFocus,
     isActive,
 
-    isDisabled(): boolean {
-      return hasListeners() && !isActive()
-    },
+    isDisabled: (): boolean => hasListeners() && !isActive(),
 
     setData: (
       updater: Updater<TQueryData | undefined, TQueryData | undefined>,
       options?: SetDataOptions
     ) => setData(updater, { ...options, manual: true }),
 
-    getObserversCount() {
-      return listeners.size
-    },
+    getObserversCount: () => listeners.size,
 
     get meta() {
       return options.meta

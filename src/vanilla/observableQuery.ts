@@ -728,15 +728,11 @@ export const createObservableQuery = <
         status = 'error'
       }
 
-      const isFetching = fetchStatus === 'fetching'
-      const isPending = status === 'pending'
-      const isLoading = isPending && isFetching
-
       const result = {
         data,
         error,
-        isLoading,
-        isFetching,
+        isLoading: status === 'pending',
+        isFetching: fetchStatus === 'fetching',
         isPlaceholderData,
         isStale: isStale(queryInfo, options),
         refetch,
