@@ -35,7 +35,7 @@ import {
   UNDEFINED,
   functionalUpdate,
   getFullKey,
-  hashKeyByFn,
+  hashKeyByOptions,
   isUndefined,
   noop,
 } from './utils'
@@ -61,7 +61,6 @@ export interface InvalidateQueryFilters<
 > extends QueryInfoFilters<TFetcherData, TVars, TError, TQueryData> {
   refetchType?: QueryInfoTypeFilter | 'none'
 }
-
 
 export type FetchQueryOptions<
   TFetcherData = unknown,
@@ -194,13 +193,13 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     }
     const promises = queryCache
       .findAll(filters)
-      .filter(query => !query.isDisabled())
-      .map(query => {
-        let promise = query.fetch(undefined, fetchOptions)
+      .filter(queryInfo => !queryInfo.isDisabled())
+      .map(queryInfo => {
+        let promise = queryInfo.fetch(UNDEFINED, fetchOptions)
         if (!fetchOptions.throwOnError) {
           promise = promise.catch(noop) as Promise<TQueryData>
         }
-        return query.state.fetchStatus === 'paused'
+        return queryInfo.state.fetchStatus === 'paused'
           ? Promise.resolve()
           : promise
       })
@@ -329,9 +328,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
       ...filters,
     }
 
-    queryCache.findAll(filters).forEach(queryInfo => {
-      queryInfo.reset()
-    })
+    queryCache.findAll(filters).forEach(queryInfo => queryInfo.reset())
     return refetchQueries(refetchFilters, options)
   }
 
@@ -349,9 +346,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     > = {},
     options: InvalidateOptions = {}
   ): Promise<void> => {
-    queryCache.findAll(filters).forEach(q => {
-      q.invalidate()
-    })
+    queryCache.findAll(filters).forEach(q => q.invalidate())
 
     if (filters.refetchType === 'none') {
       return Promise.resolve()
@@ -374,7 +369,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     TError = Error,
     TQueryData = TFetcherData
   >(
-    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData> ,
+    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>,
     cancelOptions: CancelOptions = {}
   ): Promise<void> => {
     const defaultedCancelOptions = { revert: true, ...cancelOptions }
@@ -428,9 +423,9 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
     }
 
     if (defaultedOptions.query && !defaultedOptions.queryHash) {
-      defaultedOptions.queryHash = hashKeyByFn(
+      defaultedOptions.queryHash = hashKeyByOptions(
         getFullKey(defaultedOptions.query.key, defaultedOptions.variables),
-        defaultedOptions.queryKeyHashFn
+        defaultedOptions
       )
     }
 

@@ -12,7 +12,7 @@ import type { DeepPartial, NotifyEvent, WithRequired } from './typeUtils'
 import {
   UNDEFINED,
   getFullKey,
-  hashKeyByFn,
+  hashKeyByOptions,
   isBoolean,
   isUndefined,
   partialMatchKey,
@@ -129,9 +129,9 @@ export const createQueryCache = (
     TError = Error,
     TQueryData = TFetcherData
   >(
-    filters?: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData>
+    filters: QueryInfoFilters<TFetcherData, TVars, TError, TQueryData> = {}
   ): QueryInfo<TFetcherData, TVars, TError, TQueryData>[] => {
-    return filters
+    return Object.keys(filters).length
       ? getAll().filter(queryInfo => matchQueryInfo(filters, queryInfo))
       : getAll()
   }
@@ -144,9 +144,7 @@ export const createQueryCache = (
   >(
     event: QueryCacheNotifyEvent<TFetcherData, TVars, TError, TQueryData>
   ) => {
-    listeners.forEach(listener => {
-      listener(event)
-    })
+    listeners.forEach(listener => listener(event))
   }
 
   const remove = (queryInfo: QueryInfo<any, any, any, any>) => {
@@ -175,9 +173,9 @@ export const createQueryCache = (
   ): QueryInfo<TFetcherData, TVars, TError, TQueryData> => {
     const queryHash =
       options.queryHash ??
-      hashKeyByFn(
+      hashKeyByOptions(
         getFullKey(options.query.key, options.variables),
-        options.queryKeyHashFn
+        options
       )
     let queryInfo = get<TFetcherData, TVars, TError, TQueryData>(queryHash)
 
@@ -285,13 +283,10 @@ const matchQueryInfo = (
   } = filters
 
   if (query) {
-    if (exact && query === queryInfo.query) {
+    if (exact) {
       if (
         queryInfo.queryHash !==
-        hashKeyByFn(
-          getFullKey(query.key, variables),
-          queryInfo.options.queryKeyHashFn
-        )
+        hashKeyByOptions(getFullKey(query.key, variables), queryInfo.options)
       ) {
         return false
       }

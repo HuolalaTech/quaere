@@ -223,7 +223,6 @@ export function createQueryInfo<
       'query'
     >
   ) => {
-    if (newOptions.query) options.query = newOptions.query
     options = {
       ...options.query,
       ...newOptions,

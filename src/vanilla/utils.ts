@@ -7,11 +7,11 @@ export const getFullKey = (key: string, variables?: any) => {
   return (isUndefined(variables) ? [key] : [key, variables]) as [string, any]
 }
 
-export const hashKeyByFn = (
+export const hashKeyByOptions = (
   fullKey: [string, any],
-  hashKeyFn = hashKey
+  options: { queryKeyHashFn?: (key: [string, any]) => string }
 ): string => {
-  return hashKeyFn(fullKey)
+  return (options.queryKeyHashFn || hashKey)(fullKey)
 }
 
 export const hashKey = (fullKey: [string, any]): string => {

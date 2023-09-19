@@ -1,4 +1,5 @@
 import { InfiniteData, InfiniteQuery, Query, QueryClient } from '../vanilla'
+import { useQueries } from './useQueries'
 import {
   UseSuspenseInfiniteQueryOptions,
   UseSuspenseInfiniteQueryResult,
@@ -9,7 +10,7 @@ import {
 // Avoid TS depth-limit error in case of large array literal
 type MAXIMUM_DEPTH = 20
 
-type GetOptions<T> = T extends {
+type GetSuspenseOptions<T> = T extends {
   query: InfiniteQuery<infer TFetcherData, infer TVars, infer TError>
   select: (data: any) => infer TData
 }
@@ -29,7 +30,7 @@ type GetOptions<T> = T extends {
   ? UseSuspenseQueryOptions<TFetcherData, TVars, TError, TFetcherData>
   : UseSuspenseQueryOptions
 
-type GetResults<T> = T extends {
+type GetSuspenseResults<T> = T extends {
   query: InfiniteQuery<any, any, infer TError>
   select: (data: any) => infer TData
 }
@@ -52,7 +53,7 @@ type GetResults<T> = T extends {
 /**
  * QueriesOptions reducer recursively unwraps function arguments to infer/enforce type param
  */
-export type QueriesOptions<
+export type SuspenseQueriesOptions<
   T extends any[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = []
@@ -61,9 +62,13 @@ export type QueriesOptions<
   : T extends []
   ? []
   : T extends [infer Head]
-  ? [...Result, GetOptions<Head>]
+  ? [...Result, GetSuspenseOptions<Head>]
   : T extends [infer Head, ...infer Tail]
-  ? QueriesOptions<[...Tail], [...Result, GetOptions<Head>], [...Depth, 1]>
+  ? SuspenseQueriesOptions<
+      [...Tail],
+      [...Result, GetSuspenseOptions<Head>],
+      [...Depth, 1]
+    >
   : unknown[] extends T
   ? T
   : // If T is *some* array but we couldn't assign unknown[] to it, then it must hold some known/homogenous type!
@@ -80,7 +85,7 @@ export type QueriesOptions<
 /**
  * QueriesResults reducer recursively maps type param to results
  */
-export type QueriesResults<
+export type SuspenseQueriesResults<
   T extends any[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = []
@@ -89,9 +94,13 @@ export type QueriesResults<
   : T extends []
   ? []
   : T extends [infer Head]
-  ? [...Result, GetResults<Head>]
+  ? [...Result, GetSuspenseResults<Head>]
   : T extends [infer Head, ...infer Tail]
-  ? QueriesResults<[...Tail], [...Result, GetResults<Head>], [...Depth, 1]>
+  ? SuspenseQueriesResults<
+      [...Tail],
+      [...Result, GetSuspenseResults<Head>],
+      [...Depth, 1]
+    >
   : T extends UseSuspenseQueryOptions<
       infer TFetcherData,
       any,
@@ -105,15 +114,15 @@ export type QueriesResults<
 
 export function useSuspenseQueries<
   T extends any[],
-  TCombinedResult = QueriesResults<T>
+  TCombinedResult = SuspenseQueriesResults<T>
 >(
   options: {
-    queries: readonly [...QueriesOptions<T>]
-    combine?: (result: QueriesResults<T>) => TCombinedResult
+    queries: readonly [...SuspenseQueriesOptions<T>]
+    combine?: (result: SuspenseQueriesResults<T>) => TCombinedResult
   },
   queryClient?: QueryClient
 ): TCombinedResult {
-  return useSuspenseQueries(
+  return useQueries(
     {
       ...options,
       queries: options.queries.map(query => ({
