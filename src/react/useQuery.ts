@@ -3,12 +3,12 @@ import { ObservableInfiniteQueryResult } from '../vanilla/observableInfiniteQuer
 import { ObservableQueryResult } from '../vanilla/observableQuery'
 import { UseBseQueryOptions, useBaseQuery } from './useBaseQuery'
 
-export interface UseQueryOptions<
+export type UseQueryOptions<
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error,
   TData = TFetcherData
-> extends UseBseQueryOptions<TFetcherData, TVars, TError, TFetcherData, TData> {
+> = UseBseQueryOptions<TFetcherData, TVars, TError, TFetcherData, TData> & {
   query: Query<TFetcherData, TVars, TError>
 }
 
@@ -17,18 +17,18 @@ export type UseQueryResult<
   TError = unknown
 > = ObservableQueryResult<TData, TError>
 
-export interface UseInfiniteQueryOptions<
+export type UseInfiniteQueryOptions<
   TFetcherData = unknown,
   TVars = unknown,
   TError = Error,
   TData = InfiniteData<TFetcherData>
-> extends UseBseQueryOptions<
-    TFetcherData,
-    TVars,
-    TError,
-    InfiniteData<TFetcherData>,
-    TData
-  > {
+> = UseBseQueryOptions<
+  TFetcherData,
+  TVars,
+  TError,
+  InfiniteData<TFetcherData>,
+  TData
+> & {
   query: InfiniteQuery<TFetcherData, TVars, TError>
 }
 

@@ -29,7 +29,7 @@ import {
   QueryInfoState,
   SetDataOptions,
 } from './queryInfo'
-import { DeepPartial, GetVariables, Updater } from './typeUtils'
+import { DeepPartial, GetVariablesOption, Updater } from './typeUtils'
 import { InfiniteData } from './types'
 import {
   UNDEFINED,
@@ -71,7 +71,7 @@ export type FetchQueryOptions<
   QueryInfoOptions<TFetcherData, TVars, TError, TQueryData>,
   'variables' | '_defaulted'
 > &
-  GetVariables<TVars> & {
+  GetVariablesOption<TVars> & {
     /**
      * The time in milliseconds after data is considered stale.
      * If the data is fresh it will be returned from the cache.
@@ -84,7 +84,7 @@ export type TriggerMutationOptions<
   TVars = unknown,
   TError = Error
 > = Omit<MutationInfoOptions<TData, TVars, TError>, '_defaulted'> &
-  GetVariables<TVars>
+  GetVariablesOption<TVars>
 
 export interface DefaultOptions {
   queries?: Omit<ObservableQueryOptions<any, any, any>, 'query' | '_defaulted'>
@@ -215,7 +215,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
   >(
     filters: {
       query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
-    } & GetVariables<TVars>
+    } & GetVariablesOption<TVars>
   ): QueryInfoState<TQueryData, TError> | undefined => {
     return queryCache.find(
       filters as {
@@ -233,7 +233,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
   >(
     filters: {
       query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
-    } & GetVariables<TVars>
+    } & GetVariablesOption<TVars>
   ): TQueryData | undefined => {
     return getQueryState(filters)?.data
   }
@@ -246,7 +246,7 @@ export const createQueryClient = (config: QueryClientConfig = {}) => {
   >(
     filters: {
       query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
-    } & GetVariables<TVars>,
+    } & GetVariablesOption<TVars>,
     updater: Updater<TQueryData | undefined, TQueryData | undefined>,
     setDataOptions?: SetDataOptions
   ) => {

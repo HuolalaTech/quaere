@@ -13,8 +13,7 @@
   <a aria-label="NPM version" href="https://www.npmjs.com/package/quaere">
     <img alt="" src="https://badgen.net/npm/v/quaere">
   </a>
-  <a href="https://bundlephobia.com/package/quaere@latest" target="\_parent"><img src="https://badgen.net/bundlephobia/minzip/quaere" alt="Bundlephobia"></a>
-  <a href="https://bundlephobia.com/package/quaere@latest" target="\_parent"><img src="https://badgen.net/bundlephobia/tree-shaking/quaere" alt="Tree shaking available"></a>
+  <a href="https://unpkg.com/browse/quaere@latest/build/zip/zip.esm.js" rel="nofollow"><img src="https://img.badgesize.io/https:/unpkg.com/quaere@latest/build/zip/zip.esm.js?label=gzip%20size&compression=gzip" alt="gzip size"></a>
   <a href="https://github.com/HuolalaTech/quaere"><img src="https://badgen.net/npm/types/quaere" alt="Types included" target="\_parent"></a>
   <a href="https://github.com/HuolalaTech/quaere/blob/main/LICENSE"><img src="https://badgen.net/npm/license/quaere" alt="License" target="\_parent"></a>
   <a href="https://github.com/HuolalaTech/quaere"><img src="https://img.shields.io/github/stars/HuolalaTech/quaere.svg?style=social&amp;label=Star" alt="GitHub Stars" target="\_parent"></a>

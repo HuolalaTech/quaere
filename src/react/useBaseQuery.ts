@@ -6,6 +6,7 @@ import {
   ObservableQueryResult,
 } from '../vanilla/observableQuery'
 import { PrimitiveQuery } from '../vanilla/primitiveQuery'
+import { GetVariablesOption } from '../vanilla/typeUtils'
 import { useQueryClient } from './QueryClientProvider'
 import { useQueryErrorResetBoundary } from './QueryErrorResetBoundary'
 import {
@@ -21,9 +22,10 @@ export type UseBseQueryOptions<
   TError = Error,
   TQueryData = TFetcherData,
   TData = TFetcherData
-> = ObservableQueryOptions<TFetcherData, TVars, TError, TQueryData, TData> & {
-  query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
-}
+> = ObservableQueryOptions<TFetcherData, TVars, TError, TQueryData, TData> &
+  GetVariablesOption<TVars> & {
+    query: PrimitiveQuery<TFetcherData, TVars, TError, TQueryData>
+  }
 
 export type UseBaseQueryResult<
   TData = unknown,

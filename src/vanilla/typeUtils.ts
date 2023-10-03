@@ -11,7 +11,7 @@ export type WithPatrial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 export type Override<A, B> = { [K in keyof A]: K extends keyof B ? B[K] : A[K] }
 
-export type GetVariables<TVars> = TVars extends void
+export type GetVariablesOption<TVars> = TVars extends void
   ? { variables?: TVars }
   : { variables: TVars }
 
