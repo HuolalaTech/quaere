@@ -61,7 +61,7 @@ export function useSuspenseQuery(options: any, queryClient?: QueryClient): any {
       ...options,
       enabled: true,
       suspense: true,
-      throwOnError: true,
+      throwOnError: (_error, queryInfo) => queryInfo.state.data === undefined,
     },
     queryClient
   )
