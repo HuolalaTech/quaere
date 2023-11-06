@@ -68,9 +68,7 @@ export const createQueryCache = (
     createStore?: () => QueryStore
   } = {}
 ) => {
-  let lastUpdated = Date.now()
-
-  const getLastUpdated = () => lastUpdated
+  let lastUpdated = 0
 
   const queries: QueryStore = config?.createStore?.() ?? new Map()
 
@@ -240,7 +238,9 @@ export const createQueryCache = (
     notify,
     clear,
     config,
-    getLastUpdated,
+    get lastUpdated() {
+      return lastUpdated
+    },
   }
 
   return queryCache
