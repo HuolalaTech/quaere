@@ -1,4 +1,5 @@
 import { InfiniteData, InfiniteQuery, Query, QueryClient } from '../vanilla'
+import { suspenseOptions } from './suspense'
 import { useQueries } from './useQueries'
 import {
   UseSuspenseInfiniteQueryOptions,
@@ -127,9 +128,7 @@ export function useSuspenseQueries<
       ...options,
       queries: options.queries.map(query => ({
         ...query,
-        suspense: true,
-        throwOnError: true,
-        enabled: true,
+        ...suspenseOptions,
       })),
     } as any,
     queryClient

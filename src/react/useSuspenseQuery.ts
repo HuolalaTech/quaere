@@ -1,6 +1,7 @@
 import { InfiniteData, QueryClient } from '../vanilla'
 import { ObservableInfiniteQuerySuccessResult } from '../vanilla/observableInfiniteQuery'
 import { ObservableQuerySuccessResult } from '../vanilla/observableQuery'
+import { suspenseOptions } from './suspense'
 import { useBaseQuery } from './useBaseQuery'
 import { UseInfiniteQueryOptions, UseQueryOptions } from './useQuery'
 
@@ -59,9 +60,7 @@ export function useSuspenseQuery(options: any, queryClient?: QueryClient): any {
   return useBaseQuery(
     {
       ...options,
-      enabled: true,
-      suspense: true,
-      throwOnError: (_error, queryInfo) => queryInfo.state.data === undefined,
+      ...suspenseOptions,
     },
     queryClient
   )

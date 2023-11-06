@@ -68,6 +68,10 @@ export const createQueryCache = (
     createStore?: () => QueryStore
   } = {}
 ) => {
+  let lastUpdated = Date.now()
+
+  const getLastUpdated = () => lastUpdated
+
   const queries: QueryStore = config?.createStore?.() ?? new Map()
 
   const listeners = new Set<QueryCacheListeners<any, any, any, any>>()
@@ -144,6 +148,7 @@ export const createQueryCache = (
   >(
     event: QueryCacheNotifyEvent<TFetcherData, TVars, TError, TQueryData>
   ) => {
+    lastUpdated = Date.now()
     listeners.forEach(listener => listener(event))
   }
 
@@ -235,6 +240,7 @@ export const createQueryCache = (
     notify,
     clear,
     config,
+    getLastUpdated,
   }
 
   return queryCache

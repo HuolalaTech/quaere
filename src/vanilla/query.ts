@@ -7,7 +7,7 @@ import { QueryFunction } from './typeUtils'
 
 export interface QueryOptions<
   TFetcherData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends Omit<
     PrimitiveQueryOptions<TFetcherData, TVars, TError>,
@@ -16,11 +16,8 @@ export interface QueryOptions<
   fetcher: QueryFunction<TFetcherData, TVars>
 }
 
-export interface Query<
-  TFetcherData = unknown,
-  TVars = unknown,
-  TError = unknown
-> extends PrimitiveQuery<TFetcherData, TVars, TError> {
+export interface Query<TFetcherData = unknown, TVars = void, TError = unknown>
+  extends PrimitiveQuery<TFetcherData, TVars, TError> {
   type: 'query'
 }
 

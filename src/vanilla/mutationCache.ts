@@ -57,6 +57,9 @@ export type MutationCacheListener<TData, TVars, TError> = (
 
 export const createMutationCache = (config: MutationCacheConfig = {}) => {
   let mutations: MutationInfo<any, any, any>[] = []
+  let lastUpdated = Date.now()
+
+  const getLastUpdated = () => lastUpdated
 
   const listeners = new Set<MutationCacheListener<any, any, any>>()
 
@@ -88,6 +91,7 @@ export const createMutationCache = (config: MutationCacheConfig = {}) => {
   const notify = <TData, TVars, TError>(
     event: MutationCacheNotifyEvent<TData, TVars, TError>
   ) => {
+    lastUpdated = Date.now()
     listeners.forEach(listener => listener(event))
   }
 
@@ -158,6 +162,7 @@ export const createMutationCache = (config: MutationCacheConfig = {}) => {
     subscribe,
     notify,
     config,
+    getLastUpdated,
   }
 
   return cache

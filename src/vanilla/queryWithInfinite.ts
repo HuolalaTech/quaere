@@ -9,7 +9,7 @@ import { InfiniteData } from './types'
 
 export interface QueryWithInfiniteOptions<
   TFetcherData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends Omit<
       PrimitiveQueryOptions<
@@ -26,7 +26,7 @@ export interface QueryWithInfiniteOptions<
 
 export interface InfiniteQuery<
   TFetcherData = unknown,
-  TVars = unknown,
+  TVars = void,
   TError = Error
 > extends PrimitiveQuery<
     TFetcherData,

@@ -6,6 +6,12 @@ import {
 import { isNumber } from '../vanilla/utils'
 import type { QueryErrorResetBoundaryValue } from './QueryErrorResetBoundary'
 
+export const suspenseOptions: Partial<ObservableQueryOptions> = {
+  suspense: true,
+  enabled: true,
+  throwOnError: (_error, queryInfo) => queryInfo.state.data === undefined,
+}
+
 export const ensureStaleTime = (
   defaultedOptions: ObservableQueryOptions<any, any, any>
 ) => {
